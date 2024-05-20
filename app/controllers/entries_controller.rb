@@ -1,21 +1,13 @@
 class EntriesController < ApplicationController
-  def index
-    # find all entries rows
-   @entries = Entry.all
-    # render entries/index view
-    render :template => "entries/index"
-  end
-
   def show
-    # find an Entry
-    @entry = Entry.find_by({ "id" => params["id"] })
-    # find Places for the Entry
-    @places = Place.where({ "id" => @entries["place_id"] })
-    # render places/show view with details about Places
+    @entry = Entry.find_by({"id" => params["id"]})
+    @place = Place.find_by({"id" => @entry["place_id"]})
+    # render entries/show view with details about Entry
   end
 
   def new
-    # render view with new Entry form
+    @place = Place.find_by({ "id" => params["place_id"] })
+    # render entries/new view with new Entry form
   end
 
   def create
@@ -26,14 +18,16 @@ class EntriesController < ApplicationController
     @entry["title"] = params["title"]
     @entry["description"] = params["description"]
     @entry["posted_on"] = params["posted_on"]
-   
+    
+    # assign relationship between Entry and Place
+    @entry["place_id"] = params["place_id"]
+
     # save Entry row
     @entry.save
 
     # redirect user
-    redirect_to "/places"
+    redirect_to "/places/#{@entry["place_id"]}"
   end
-
 
 
 end

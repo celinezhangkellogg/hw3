@@ -1,13 +1,8 @@
 class EntriesController < ApplicationController
-  def show
-    @entry = Entry.find_by({"id" => params["id"]})
-    @place = Place.find_by({"id" => @entry["place_id"]})
-    # render entries/show view with details about Entry
-  end
 
   def new
-    @place = Place.find_by({ "id" => params["place_id"] })
-    # render entries/new view with new Entry form
+    render :template => "entries/new"
+
   end
 
   def create
@@ -27,6 +22,7 @@ class EntriesController < ApplicationController
 
     # redirect user
     redirect_to "/places/#{@entry["place_id"]}"
+
   end
 
 

@@ -2,7 +2,7 @@
 
 <h1><%= @place["name"] %></h1>
 
-<h2>Activities</h2>
+<h2>Entries</h2>
 
 <ul>
 <% entries = Entry.where({"place_id" => @place["id"]})%>
